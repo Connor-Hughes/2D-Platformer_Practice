@@ -26,11 +26,10 @@ public class CharacterMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.D))
         {
+
             rb = GetComponent<Rigidbody2D>();
             if (Mathf.Abs(rb.velocity.x) < maxVelocity)
-            {
                 rb.AddForce(transform.right * thrust);
-            }
 
             if (direction == 1)
             {
@@ -38,66 +37,62 @@ public class CharacterMovement : MonoBehaviour
                 sr.flipX = false;
             }
             direction = 0;
-
         }
-
         if (Input.GetKey(KeyCode.A))
         {
             rb = GetComponent<Rigidbody2D>();
             if (Mathf.Abs(rb.velocity.x) < maxVelocity)
-            {
                 rb.AddForce(transform.right * -thrust);
-            }
-
             if (direction == 0)
             {
                 SpriteRenderer sr = GetComponent<SpriteRenderer>();
                 sr.flipX = true;
             }
-
             direction = 1;
 
-            if (Input.GetKey(KeyCode.Space))
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            rb = GetComponent<Rigidbody2D>();
+            if (!airborne && Mathf.Abs(rb.velocity.y) < maxVelocity)
             {
-                rb = GetComponent<Rigidbody2D>();
-                if (!airborne && Mathf.Abs(rb.velocity.y) < maxVelocity)
-                {
-                    rb.AddForce(transform.up * thrust * 40f);
-                    airborne = true;
-                }
+                rb.AddForce(transform.up * thrust * 30f);
+                airborne = true;
             }
+        }
 
-            if (followCharacter)
-            {
-                Vector3 newPos = new Vector3(this.transform.position.x, this.transform.position.y, -10);
-                camera.transform.position = newPos;
-            }
+        if (followCharacter)
+        {
+            Vector3 newPos = new Vector3(this.transform.position.x, this.transform.position.y, -10);
+            camera.transform.position = newPos;
+        }
 
-            void OnCollisionEnter2D(Collision2D coll)
-            {
-                if (coll.gameObject.tag == "platform")
-                {
-                    airborne = false;
-                }
-                else if (coll.gameObject.tag == "ramp")
-                {
-                    rb = GetComponent<Rigidbody2D>();
-                    if (Mathf.Abs(rb.velocity.y) < maxVelocity)
-                        rb.AddForce(transform.up * thrust * 40f);
-                    airborne = true;
-                }
+    }
 
-            }
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.tag == "platform")
+        {
+            airborne = false;
+        }
+        else if (coll.gameObject.tag == "ramp")
+        {
+            rb = GetComponent<Rigidbody2D>();
+            if (Mathf.Abs(rb.velocity.y) < maxVelocity)
+                rb.AddForce(transform.up * thrust * 50f);
+            airborne = true;
+        }
 
-            void OnTriggerEnter2D(Collider2D coll)
-            {
 
-                if (coll.gameObject.tag == "coin")
-                {
-                    AudioSource.PlayClipAtPoint(coinCollect, transform.position);
-                    Destroy(coll.gameObject);
-                }
-            }
+    }
+
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+
+        if (coll.gameObject.tag == "coin")
+        {
+            AudioSource.PlayClipAtPoint(coinCollect, transform.position);
+            Destroy(coll.gameObject);
         }
     }
 }

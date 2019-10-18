@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - platform
+  - character
+  - coin
+  - enemy
+  - ramp
   layers:
   - Default
   - TransparentFX

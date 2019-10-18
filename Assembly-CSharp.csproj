@@ -63,6 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CharacterMovement.cs" />
+    <Compile Include="Assets\Scripts\CoinCollection.cs" />
+    <Compile Include="Assets\Scripts\EnemyMovement.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/GADE6111/2D Platformer Practice/2D Platformer_Practice/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
